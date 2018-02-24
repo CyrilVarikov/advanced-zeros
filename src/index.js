@@ -14,7 +14,6 @@ module.exports = function getZerosCount(number, base) {
     }
   }
 
-  var i = 0;
   var countDeleted = 0;
   var pairFactor = [];
   while (simpleFactor.length > 0) {
@@ -30,35 +29,17 @@ module.exports = function getZerosCount(number, base) {
     simpleFactor.splice(0, countDeleted);
   }
 
-  var min = 0;
-  var div = 0;
-  // console.log(pairFactor.length);
-
-  if (pairFactor.length === 1) {
-    min = pairFactor[0][0];
-    div = pairFactor[0][1];
-  } else {
-    for (var i = 0; i < pairFactor.length - 1; i++) {
-      if ((pairFactor[0][1] >= 5) && (pairFactor[i + 1][0] - pairFactor[i][0] < 4)) {
-        min = pairFactor[0][0];
-        div = pairFactor[0][1];
-      } else {
-          if (pairFactor[i][0] < pairFactor[i + 1][0] ) {
-            min = pairFactor[i + 1][0];
-            div = pairFactor[i + 1][1];
-          } else {
-            min = pairFactor[i][0];
-            div = pairFactor[i][1];
-          }
-        }
-    }
-  }
-
-
   var countZeros = 0;
-  while (number >= min) {
-    number = Math.floor(number / min);
-    countZeros += number;
+  var Zeros = [];
+  var temp = number;
+  for (var i = 0; i < pairFactor.length; i++) {
+    while (number >= pairFactor[i][0]) {
+      number = Math.floor(number / pairFactor[i][0]);
+      countZeros += number;
+    }
+    Zeros.push(Math.floor(countZeros / pairFactor[i][1]));
+    countZeros = 0;
+    number = temp;
   }
-  return Math.floor(countZeros / div);
+  return Math.min.apply(null, Zeros);
 };
