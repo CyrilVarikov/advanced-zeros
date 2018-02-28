@@ -2,6 +2,7 @@ module.exports = function getZerosCount(number, base) {
   var divider = 2;
   var simpleFactor = [];
 
+  //раскладываем на простые множители число
   while (base > 1) {
     while (base % divider === 0) {
       simpleFactor.push(divider);
@@ -14,6 +15,8 @@ module.exports = function getZerosCount(number, base) {
     }
   }
 
+  //Отбираем пары, простой множитель - его степень
+  //для дальнейшего подсчёта нулей
   var countDeleted = 0;
   var pairFactor = [];
   while (simpleFactor.length > 0) {
@@ -32,6 +35,8 @@ module.exports = function getZerosCount(number, base) {
   var countZeros = 0;
   var Zeros = [];
   var temp = number;
+  //Считаем потенциальное количество нулей
+  //нужное нам значение будет минимальным из имеющихся
   for (var i = 0; i < pairFactor.length; i++) {
     while (number >= pairFactor[i][0]) {
       number = Math.floor(number / pairFactor[i][0]);
